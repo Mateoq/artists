@@ -93,6 +93,42 @@ export interface GenericMap {
 }
 
 export interface SelectOption {
-  value: string;
+  value: number;
   text: string;
+}
+
+export interface SelectChangeCB {
+  (option: SelectOption): void;
+}
+
+export interface Genre {
+  id: number;
+  name: string;
+  parent_id: number;
+}
+
+export interface ArtistGenre {
+  id: number;
+  name: string;
+  is_primary: boolean;
+}
+
+export interface Artist {
+  id: number;
+  name: string;
+  image: string;
+  popularity: number;
+  genres: ArtistGenre[];
+}
+
+export interface HandlerIDCB {
+  (id: number): void;
+}
+
+export interface ArtistFavCB {
+  (artist: Artist): void
+}
+
+export interface ArtistsFavMap {
+  [id: number]: Artist;
 }

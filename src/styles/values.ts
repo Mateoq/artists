@@ -25,6 +25,26 @@ export const fontNames = {
   roboto: 'Roboto'
 };
 
+export const fontSizes = {
+  largeHeading: '4rem',
+  heading1: '3rem',
+  heading2: '2.4rem',
+  heading3:  '2rem',
+  paragraph: '1.6rem',
+  paragraph2: '1.4rem',
+  caption: '1.1rem'
+};
+
+export const lineHeights = {
+  largeHeading: '4.8rem',
+  heading1: '3.9rem',
+  heading2: '3.1rem',
+  heading3:  '2.6rem',
+  paragraph: '2.4rem',
+  paragraph2: '1.7rem',
+  caption: '1.2rem'
+};
+
 export const fontTypes = {
   largeHeading: css`
     font-size: 4rem;

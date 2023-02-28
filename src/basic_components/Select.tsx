@@ -1,72 +1,94 @@
 import React from 'react';
-import ReactSelect, { components } from 'react-select';
-import styled from 'styled-components';
+import ReactSelect from 'react-select';
+import { useTheme } from 'styled-components';
 
-import { Color, SelectOption } from '../types';
-import { colorProp } from '../styles/utils';
-
-const Control = styled.div`
-  align-items: center;
-  background: ${colorProp(Color.GRAY_700)};
-  border: 0.1rem solid ${colorProp(Color.GRAY_700)};
-  border-radius: 0.4rem;
-  color: ${colorProp(Color.WHITE)};
-  cursor: pointer;
-  display: flex;
-  height: 100%;
-  justify-content: space-between;
-  outline: 0;
-  position: relative;
-  transition: border-color .2s ease;
-  width: 100%;
-
-  &:active,
-  &:focus {
-    border-color: ${colorProp(Color.GRAY_900)};
-    outline: 0;
-  }
-`;
-
-const SelectPlaceholder = styled(components.Placeholder)`
-  color: ${colorProp(Color.WHITE)};
-  grid-area: 1/1/2/3;
-  margin-left: 2px;
-  margin-right: 2px;
-`;
-
-const SelectInput = styled(components.Input)`
-  color: ${colorProp(Color.WHITE)};
-`;
+import { SelectChangeCB, SelectOption } from '../types';
 
 export interface SelectProps {
   options: SelectOption[];
+  onChange: SelectChangeCB;
 }
 
 const Select: React.FC<SelectProps> = (props) => {
-  const { options } = props;
+  const { options, onChange } = props;
+  const theme = useTheme();
 
   return (
     <ReactSelect
       options={options}
       isSearchable
-      components={{
-        Control: ({ children }) => (
-          <Control>
-            {children}
-          </Control>
-        ),
-        ClearIndicator: ({ children, ...rest }) => (
-          <components.ClearIndicator {...rest}>
-            Clear
-            {children}
-          </components.ClearIndicator>
-        ),
-        Placeholder: ({ children, ...rest }) => (
-          <SelectPlaceholder {...rest}>
-            {children}
-          </SelectPlaceholder>
-        ),
-        Input: ((SelectInput as unknown) as typeof components.Input)
+      onChange={(value) => onChange(value as SelectOption)}
+      getOptionLabel={(option) => (option.text)}
+      getOptionValue={(option) => (option.value)}
+      styles={{
+        control: (base, state) => ({
+          ...base,
+          backgroundColor: theme.colors.gray700,
+          border: '.1rem solid',
+          borderColor: (state.isFocused) ? theme.colors.gray900 : theme.colors.gray700,
+          color: theme.colors.white,
+          cursor: 'pointer',
+          transition: 'border-color .2s ease',
+          outline: 0,
+          '&:hover': {
+            outline: 0
+          },
+          '&:active': {
+            outline: 0
+          }
+        }),
+        placeholder: (base) => ({
+          ...base,
+          color: theme.colors.gray200,
+          fontSize: theme.fontSizes.paragraph,
+          lineHeight: theme.lineHeights.paragraph
+        }),
+        input: (base) => ({
+          ...base,
+          color: theme.colors.white,
+          fontSize: theme.fontSizes.paragraph,
+          lineHeight: theme.lineHeights.paragraph
+        }),
+        indicatorSeparator: (base) => ({
+          ...base,
+          backgroundColor: theme.colors.white
+        }),
+        dropdownIndicator: (base) => ({
+          ...base,
+          color: theme.colors.white,
+          '&:hover': {
+            color: theme.colors.gray900
+          }
+        }),
+        menu: (base) => ({
+          ...base,
+          backgroundColor: theme.colors.gray900,
+          border: 0
+        }),
+        option: (base, state) => ({
+          ...base,
+          backgroundColor: (state.isSelected) ? theme.colors.gray800 : theme.colors.gray900,
+          color: theme.colors.white,
+          cursor: 'pointer',
+          fontSize: theme.fontSizes.paragraph2,
+          lineHeight: theme.lineHeights.paragraph2,
+          padding: '1rem .8rem',
+          '&:hover': {
+            backgroundColor: theme.colors.gray800
+          }
+        }),
+        noOptionsMessage: (base) => ({
+          ...base,
+          color: theme.colors.gray400,
+          fontSize: theme.fontSizes.paragraph2,
+          lineHeight: theme.lineHeights.paragraph2
+        }),
+        singleValue: (base) => ({
+          ...base,
+          color: theme.colors.white,
+          fontSize: theme.fontSizes.paragraph,
+          lineHeight: theme.lineHeights.paragraph
+        })
       }}
     />
   );

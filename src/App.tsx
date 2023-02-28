@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import Artists from './pages/Artists';
 import ArtistDetail from './pages/ArtistDetail';
@@ -24,15 +25,19 @@ const router = createBrowserRouter([
   }
 ]);
 
+const queryClient = new QueryClient();
+
 const  App: React.FC = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <>
-        <GlobalStyles/>
-        <RouterProvider router={router} />
-        <h1>Hello</h1>
-      </>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <>
+          <GlobalStyles/>
+          <RouterProvider router={router} />
+          <h1>Hello</h1>
+        </>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };
 
