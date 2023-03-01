@@ -1,40 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import ArtistCard from '../basic_components/ArtistCard';
 import Container from '../basic_components/Container';
 import Div from '../basic_components/Div';
 import Select from '../basic_components/Select';
+import Text from '../basic_components/Text';
+import ArtistsByGenreList from '../complex_components/ArtistsByGenreList';
+import { useArtistsStore } from '../context_components/ArtistStore';
 import { useGenresQuery } from '../queries';
-import { newArtist } from '../helpers';
+import {
+  SelectOption,
+  TextElement,
+  TextType
+} from '../types';
 import { mapGenres } from '../utils';
 
-const artist = newArtist(
-  24,
-  'Taj Mahal',
-  'https:\/\/i.scdn.co\/image\/23abc0acc4732626a3cbb727ad79f56a46e19cd6',
-  54,
-  [{ id: 2, name: 'Blues', is_primary: true }]
-);
-
 const Artists: React.FC = () => {
-  const { data: { data } } = useGenresQuery();
-  const genres = mapGenres(data);
+  const { data } = useGenresQuery();
+  const [genres, setGenres] = useState<SelectOption[]>([]);
+  const { setGenre } = useArtistsStore();
+
+  useEffect(() => {
+    if (data) {
+      setGenres(mapGenres(data.data));
+    }
+  }, [data]);
 
   return (
-    <Container>
-      <h1>Artists</h1>
-      <Div css={`max-width: 23rem;`}>
+    <>
+      <Text as={TextElement.PARAGRAPH} type={TextType.PARAGRAPH}>
+        Select a genre to show you some artists:
+      </Text>
+      <Div css={`margin-top: 1.5rem; max-width: 30rem;`}>
         <Select
           options={genres}
-          onChange={(option) => console.log(option)}
+          onChange={setGenre}
         />
       </Div>
       <Div css={`margin-top: 3rem;`}>
-        <ArtistCard
-          data={artist} onClickFav={(a) => console.log(a)}
-        />
+        <ArtistsByGenreList/>
       </Div>
-    </Container>
+    </>
   );
 };
 

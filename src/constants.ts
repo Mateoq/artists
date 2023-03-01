@@ -4,6 +4,12 @@ export const paths = {
   FAVORITE_ARTISTS: '/favorite'
 };
 
+export const redirectPaths = {
+  ARTISTS_LIST: '/',
+  ARTIST_DETAIL: (id: number) => (`/artist/${id}`),
+  FAVORITE_ARTISTS: '/favorite'
+};
+
 export const componentProps = {
   ACTIVE: 'active',
   ALIGNMENT: 'alignment',
@@ -27,4 +33,8 @@ export const api = {
   ARTISTS_BY_GENRE: (id: number) => (`${API_URL}/api/v1/music/genres/${id}/artists?apikey=${import.meta.env.VITE_API_KEY}`),
   ARTIST_DETAIL: (id: number) => (`${API_URL}/api/v1/music/artists/${id}?apikey=${import.meta.env.VITE_API_KEY}`),
   SIMILAR_ARTISTS: (id: number) => (`${API_URL}/api/v1/music/artists/${id}/similar?apikey=${import.meta.env.VITE_API_KEY}`)
+};
+
+export const keys = {
+  FAVORITES_LIST: 'favorites'
 };

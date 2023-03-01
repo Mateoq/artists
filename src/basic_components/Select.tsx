@@ -19,7 +19,7 @@ const Select: React.FC<SelectProps> = (props) => {
       isSearchable
       onChange={(value) => onChange(value as SelectOption)}
       getOptionLabel={(option) => (option.text)}
-      getOptionValue={(option) => (option.value)}
+      getOptionValue={(option) => (option.value.toString())}
       styles={{
         control: (base, state) => ({
           ...base,

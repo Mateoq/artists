@@ -125,10 +125,6 @@ export interface HandlerIDCB {
   (id: number): void;
 }
 
-export interface ArtistFavCB {
+export interface ArtistHandlerCB {
   (artist: Artist): void
-}
-
-export interface ArtistsFavMap {
-  [id: number]: Artist;
 }

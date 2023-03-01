@@ -1,22 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import Button from './Button';
 import Text from './Text';
 import {
   Artist,
-  ArtistFavCB,
-  ArtistGenre,
+  ArtistHandlerCB,
   Color,
-  HandlerIDCB,
   TextAlignment,
   TextElement,
   TextType
 } from '../types';
 import { colorProp } from '../styles/utils';
+import { redirectPaths } from '../constants';
 
 const ArtistContainer = styled.div`
-  background-color: ${colorProp(Color.GRAY_900)}; 
+  background-color: ${colorProp(Color.GRAY_900)};
   border-radius: .4rem;
   display: flex;
   column-gap: 1.8rem;
@@ -48,7 +48,7 @@ const ArtistDetails = styled.div`
   row-gap: .5rem;
 `;
 
-const ArtistNameButton = styled.button`
+const ArtistNameButton = styled(Link)`
 
 `;
 
@@ -63,18 +63,16 @@ const ArtistActionContainer = styled.div`
 export interface ArtistCardProps {
   data: Artist;
   isFav?: boolean;
-  onClickArtist: HandlerIDCB;
-  onClickFav: ArtistFavCB;
+  onClickFav: ArtistHandlerCB;
 }
 
 const ArtistCard: React.FC<ArtistCardProps> = (props) => {
   const {
     data,
     isFav,
-    onClickArtist,
     onClickFav
   } = props;
-  const genre = data.genres.find((genre) => (genre.is_primary)) as ArtistGenre;
+  const genre = data.genres.find((genre) => (genre.is_primary));
 
   return (
     <ArtistContainer>
@@ -82,7 +80,7 @@ const ArtistCard: React.FC<ArtistCardProps> = (props) => {
         <ArtistImage src={data.image} alt={data.name} />
       </ArtistImageContainer>
       <ArtistDetails>
-        <ArtistNameButton onClick={() => (onClickArtist(data.id))}>
+        <ArtistNameButton to={redirectPaths.ARTIST_DETAIL(data.id)}>
           <Text
             as={TextElement.PARAGRAPH}
             type={TextType.PARAGRAPH}
@@ -91,13 +89,15 @@ const ArtistCard: React.FC<ArtistCardProps> = (props) => {
             {data.name}
           </Text>
         </ArtistNameButton>
-        <Text
-          as={TextElement.PARAGRAPH}
-          type={TextType.PARAGRAPH2}
-          alignment={TextAlignment.CENTER}
-        >
-          {genre.name}
-        </Text>
+        {genre && (
+          <Text
+            as={TextElement.PARAGRAPH}
+            type={TextType.PARAGRAPH2}
+            alignment={TextAlignment.CENTER}
+          >
+            {genre.name}
+          </Text>
+        )}
       </ArtistDetails>
       <ArtistActionContainer>
         <Button onClick={() => (onClickFav(data))} secondary>

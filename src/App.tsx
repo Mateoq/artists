@@ -2,10 +2,13 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
+import Container from './basic_components/Container';
 import Artists from './pages/Artists';
 import ArtistDetail from './pages/ArtistDetail';
 import FavoriteArtists from './pages/FavoriteArtists';
+import { ArtistsStoreProvider } from './context_components/ArtistStore';
 import GlobalStyles from './styles/GlobalStyles';
 import theme from './styles/theme';
 import { paths } from './constants';
@@ -33,10 +36,14 @@ const  App: React.FC = () => {
       <ThemeProvider theme={theme}>
         <>
           <GlobalStyles/>
-          <RouterProvider router={router} />
-          <h1>Hello</h1>
+          <ArtistsStoreProvider>
+            <Container>
+              <RouterProvider router={router} />
+            </Container>
+          </ArtistsStoreProvider>
         </>
       </ThemeProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };
