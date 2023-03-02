@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import Container from '../basic_components/Container';
 import Div from '../basic_components/Div';
 import Select from '../basic_components/Select';
 import Text from '../basic_components/Text';
 import ArtistsByGenreList from '../complex_components/ArtistsByGenreList';
+import TopNav from '../complex_components/TopNav';
 import { useArtistsStore } from '../context_components/ArtistStore';
 import { useGenresQuery } from '../queries';
 import {
@@ -27,6 +27,7 @@ const Artists: React.FC = () => {
 
   return (
     <>
+      <TopNav hideBack/>
       <Text as={TextElement.PARAGRAPH} type={TextType.PARAGRAPH}>
         Select a genre to show you some artists:
       </Text>

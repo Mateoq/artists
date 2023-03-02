@@ -5,7 +5,7 @@ import { mq } from "../styles/media";
 const Container = styled.section`
   margin: 0 auto;
   max-width: 100%;
-  padding-top: 2rem;
+  padding: 3rem 0;
 
   ${mq('md', css`
     max-width: 720px;

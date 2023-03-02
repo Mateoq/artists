@@ -7,7 +7,6 @@ import { noop } from 'lodash';
 
 import {
   Artist,
-  ArtistsFavMap,
   SelectOption
 } from '../types';
 import { keys } from '../constants';
@@ -15,24 +14,28 @@ import { keys } from '../constants';
 export interface ArtistStoreContext {
   genre: SelectOption | null;
   favorites: Artist[];
+  artist: Artist | null;
   addFavorite(artist: Artist): void;
   removeFavorite(artistId: number): void;
   setGenre(genre: SelectOption): void;
+  setArtist(artist: Artist): void;
 }
 
 export const ArtistsStoreContext = React.createContext<ArtistStoreContext>({
   genre: null,
   favorites: [],
+  artist: null,
   addFavorite: noop,
   removeFavorite: noop,
-  setGenre: noop
+  setGenre: noop,
+  setArtist: noop
 });
 
 export interface ArtistsStoreProviderProps {
   children?: React.ReactNode;
 }
 
-function saveFavorites(favorites: ArtistsFavMap) {
+function saveFavorites(favorites: Artist[]) {
   localStorage.setItem(keys.FAVORITES_LIST, JSON.stringify(favorites));
 }
 
