@@ -13,6 +13,9 @@ Small React app to manage a custom music artists list.
 - ARTIST DETAIL: `/artist/:id`
 - FAVORITE ARTIST: `/favorite`
 
+## Node Version
+LTS 18.14.2
+
 ## Setup
 After cloning the repo run the next command:
 
